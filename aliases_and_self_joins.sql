@@ -46,3 +46,11 @@ FROM persons b
 INNER JOIN persons a 
     ON a.PersonID = b.ReportsTo
 ORDER BY Manager;
+
+
+SELECT a.LastName As ManagerLastName
+    ,b.LastName AS 'Direct Reporting'
+FROM Employees AS a
+INNER JOIN Employees AS b
+    ON a.EmployeeId = b.ReportsTo
+WHERE a.LastName = 'Mitchell'
