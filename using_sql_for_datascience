@@ -1,0 +1,65 @@
+Using SQL for Data Science
+
+Working Through a Problem from Beginning to END:
+-Data understanding
+-Business understanding
+-Profiling
+-Start with SELECT
+-Test
+-Format & Comment
+-Review
+
+Data understanding
+-Most importan step
+-Understandig relationships in your Data
+-NULL values
+-String values
+-Dates and times
+
+Subject Area (Business) understanding:
+-Until you gain business understandig, writing queries may take more times
+-Understanding where data joins are
+-Differentiating integers from strings
+-Investing time to understand your subject will help later during data analysis
+
+Business Understanding:
+-Ask question about business problem you are solving
+-Hard to separate data and business understanding
+-Data Understanding <--> Business Understanding
+
+Beware of the Unspoken Need:
+-"We want to predict whether or not a customer is likely to buy our product."
+-Which customers?
+-What product?
+-What is/should be excluded?
+-What is/should be counted from past?
+
+Profiling Data
+-Get into the details of your data
+-Create a data model and map the fields and tables you Need
+-Consider joins and calculations
+-Understand any data quality or format issues
+
+Start with SELECT
+-Start simple
+-Any query begins with SELECT statement
+-Add in special formating
+-If using subqueries, start with the inner-most query and work outward
+
+Test and Troubleshoot
+-Do not wait until the end to test queries
+-Test after each join or filter
+-Are you getting the result you expect?
+-Start small and go step-by-step when troubleshooting a query
+
+Format and Comment
+-Use correct formatting and indentatio
+-Comment strategically
+-Clean code and comments help when you revisit or hand off code
+
+Review
+-Always review old queries
+-Business rules
+-Date changes
+-Date Indicators
+-Work the problem for beginning to end
