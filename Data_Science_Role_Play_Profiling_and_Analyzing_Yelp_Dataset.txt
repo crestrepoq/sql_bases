@@ -71,29 +71,29 @@ FROM Business
 	
 	SQL code used to arrive at answer:
 	
-    SELECT count(*)
-    FROM user
-    /*Check if there are null values in any of the columns*/
-    WHERE id IS NULL
-        OR name IS NULL
-        OR review_count IS NULL
-        OR yelping_since IS NULL
-        OR useful IS NULL
-        OR funny IS NULL
-        OR cool IS NULL
-        OR fans IS NULL
-        OR average_stars IS NULL
-        OR compliment_hot IS NULL
-        OR compliment_more IS NULL
-        OR compliment_profile IS NULL
-        OR compliment_cute IS NULL
-        OR compliment_list IS NULL
-        OR compliment_note IS NULL
-        OR compliment_plain IS NULL
-        OR compliment_cool IS NULL
-        OR compliment_funny IS NULL
-        OR compliment_writer IS NULL
-        OR compliment_photos IS NULL
+SELECT count(*)
+FROM user
+/*Check if there are null values in any of the columns*/
+WHERE id IS NULL
+    OR name IS NULL
+    OR review_count IS NULL
+    OR yelping_since IS NULL
+    OR useful IS NULL
+    OR funny IS NULL
+    OR cool IS NULL
+    OR fans IS NULL
+    OR average_stars IS NULL
+    OR compliment_hot IS NULL
+    OR compliment_more IS NULL
+    OR compliment_profile IS NULL
+    OR compliment_cute IS NULL
+    OR compliment_list IS NULL
+    OR compliment_note IS NULL
+    OR compliment_plain IS NULL
+    OR compliment_cool IS NULL
+    OR compliment_funny IS NULL
+    OR compliment_writer IS NULL
+    OR compliment_photos IS NULL
 	
 
 	
@@ -138,15 +138,15 @@ FROM user
 
 	SQL code used to arrive at answer:
 
-    SELECT b.city, count(b.city) AS num_reviews
-    FROM review r
-    /*Left join with business table to get cities. First review and the business for take just cities that have reviews*/
-    LEFT JOIN business b
-        ON b.id = r.business_id
-    /*Verify that we are not taking null values in query*/ 
-    WHERE r.stars IS NOT NULL
-    GROUP BY b.city
-    ORDER BY num_reviews DESC	
+SELECT b.city, count(b.city) AS num_reviews
+FROM review r
+/*Left join with business table to get cities. First review and the business for take just cities that have reviews*/
+LEFT JOIN business b
+    ON b.id = r.business_id
+/*Verify that we are not taking null values in query*/ 
+WHERE r.stars IS NOT NULL
+GROUP BY b.city
+ORDER BY num_reviews DESC	
 	
 	Copy and Paste the Result Below:
 	+-----------------+-------------+
@@ -185,14 +185,14 @@ FROM user
 
 i. Avon
 
-    SQL code used to arrive at answer:
-    SELECT r.stars AS Stars_rating, COUNT(*)
-    FROM business b
-    /* I made the join with left table business and right table reviews because I test and Avon did not  have reviews so in this way I get the value none for that*/
-    LEFT JOIN review r
-        ON b.id = r.business_id
-    WHERE b.city like 'Avon'
-    GROUP BY Stars_rating
+SQL code used to arrive at answer:
+SELECT r.stars AS Stars_rating, COUNT(*)
+FROM business b
+/* I made the join with left table business and right table reviews because I test and Avon did not  have reviews so in this way I get the value none for that*/
+LEFT JOIN review r
+    ON b.id = r.business_id
+WHERE b.city like 'Avon'
+GROUP BY Stars_rating
 
 Copy and Paste the Resulting Table Below (2 columns â€“ star rating and count):
     +------+--------------+----------+
@@ -205,46 +205,46 @@ ii. Beachwood
 
 SQL code used to arrive at answer:
 
-    SELECT r.stars AS Stars_rating, COUNT(*)
-    FROM business b
-    LEFT JOIN review r
-        ON b.id = r.business_id
-    WHERE b.city like 'Beachwood'
-    GROUP BY Stars_rating
+SELECT r.stars AS Stars_rating, COUNT(*)
+FROM business b
+LEFT JOIN review r
+    ON b.id = r.business_id
+WHERE b.city like 'Beachwood'
+GROUP BY Stars_rating
 
 
 Copy and Paste the Resulting Table Below (2 columns â€“ star rating and count):
 		
-    +-----------+--------------+----------+
-    | city      | Stars_rating | COUNT(*) |
-    +-----------+--------------+----------+
-    | Beachwood |         None |       13 |
-    | Beachwood |            3 |        1 |
-    +-----------+--------------+----------+
++-----------+--------------+----------+
+| city      | Stars_rating | COUNT(*) |
++-----------+--------------+----------+
+| Beachwood |         None |       13 |
+| Beachwood |            3 |        1 |
++-----------+--------------+----------+
 
 
 7. Find the top 3 users based on their total number of reviews:
 		
-	SQL code used to arrive at answer:
-    SELECT u.id,u.name,COUNT(*) AS num_reviews
-    FROM review r
-    LEFT JOIN user u
-        ON u.id = r.user_id
-    WHERE r.stars IS NOT NULL
-        AND u.name IS NOT NULL
-    GROUP BY u.id
-    ORDER BY num_reviews DESC
-    LIMIT 3	
+SQL code used to arrive at answer:
+SELECT u.id,u.name,COUNT(*) AS num_reviews
+FROM review r
+LEFT JOIN user u
+    ON u.id = r.user_id
+WHERE r.stars IS NOT NULL
+    AND u.name IS NOT NULL
+GROUP BY u.id
+ORDER BY num_reviews DESC
+LIMIT 3	
 		
 	Copy and Paste the Result Below:
 
-    +------------------------+-----------+-------------+
-    | id                     | name      | num_reviews |
-    +------------------------+-----------+-------------+
-    | -0udWcFQEt2M8kM3xcIofw | Kaitlan   |           2 |
-    | -Biq3Dt8YhkRJEO_ITrvww | Christina |           2 |
-    | -l4iRZ2wYow39RTevk21Dg | Craig     |           2 |
-    +------------------------+-----------+-------------+
++------------------------+-----------+-------------+
+| id                     | name      | num_reviews |
++------------------------+-----------+-------------+
+| -0udWcFQEt2M8kM3xcIofw | Kaitlan   |           2 |
+| -Biq3Dt8YhkRJEO_ITrvww | Christina |           2 |
+| -l4iRZ2wYow39RTevk21Dg | Craig     |           2 |
++------------------------+-----------+-------------+
 		
 
 8. Does posing more reviews correlate with more fans?
@@ -259,53 +259,53 @@ Copy and Paste the Resulting Table Below (2 columns â€“ star rating and cou
 
 	Answer:
 
-    SELECT filter.category,count(category)
-    /*I made a substring doing a CASE for categorize text review among these that have 'love', 'hate' o none of both words*/
-    SELECT filter.category as category,count(category) num_mentions
-    FROM (SELECT id
-        ,CASE
-            WHEN text like '%love%' THEN 'love'
-            WHEN text like '%hate%' THEN 'hate'
-        ELSE 'other'
-        END category
-        FROM review) AS filter
-    WHERE filter.category NOT IN ('other')
-    GROUP BY filter.category
+SELECT filter.category,count(category)
+/*I made a substring doing a CASE for categorize text review among these that have 'love', 'hate' o none of both words*/
+SELECT filter.category as category,count(category) num_mentions
+FROM (SELECT id
+    ,CASE
+        WHEN text like '%love%' THEN 'love'
+        WHEN text like '%hate%' THEN 'hate'
+    ELSE 'other'
+    END category
+    FROM review) AS filter
+WHERE filter.category NOT IN ('other')
+GROUP BY filter.category
 	
 	SQL code used to arrive at answer:
 
-    +----------+--------------+
-    | category | num_mentions |
-    +----------+--------------+
-    | hate     |          178 |
-    | love     |         1780 |
-    +----------+--------------+	
++----------+--------------+
+| category | num_mentions |
++----------+--------------+
+| hate     |          178 |
+| love     |         1780 |
++----------+--------------+	
 	
 10. Find the top 10 users with the most fans:
 
 	SQL code used to arrive at answer:
 	
-    SELECT id,name,fans
-    FROM user
-    ORDER BY fans DESC
-    LIMIT 10
+SELECT id,name,fans
+FROM user
+ORDER BY fans DESC
+LIMIT 10
 	
 	Copy and Paste the Result Below:
 
-	+------------------------+-----------+------+
-    | id                     | name      | fans |
-    +------------------------+-----------+------+
-    | -9I98YbNQnLdAmcYfb324Q | Amy       |  503 |
-    | -8EnCioUmDygAbsYZmTeRQ | Mimi      |  497 |
-    | --2vR0DIsmQ6WfcSzKWigw | Harald    |  311 |
-    | -G7Zkl1wIWBBmD0KRy_sCw | Gerald    |  253 |
-    | -0IiMAZI2SsQ7VmyzJjokQ | Christine |  173 |
-    | -g3XIcCb2b-BD0QBCcq2Sw | Lisa      |  159 |
-    | -9bbDysuiWeo2VShFJJtcw | Cat       |  133 |
-    | -FZBTkAZEXoP7CYvRV2ZwQ | William   |  126 |
-    | -9da1xk7zgnnfO1uTVYGkA | Fran      |  124 |
-    | -lh59ko3dxChBSZ9U7LfUw | Lissa     |  120 |
-    +------------------------+-----------+------+
++------------------------+-----------+------+
+| id                     | name      | fans |
++------------------------+-----------+------+
+| -9I98YbNQnLdAmcYfb324Q | Amy       |  503 |
+| -8EnCioUmDygAbsYZmTeRQ | Mimi      |  497 |
+| --2vR0DIsmQ6WfcSzKWigw | Harald    |  311 |
+| -G7Zkl1wIWBBmD0KRy_sCw | Gerald    |  253 |
+| -0IiMAZI2SsQ7VmyzJjokQ | Christine |  173 |
+| -g3XIcCb2b-BD0QBCcq2Sw | Lisa      |  159 |
+| -9bbDysuiWeo2VShFJJtcw | Cat       |  133 |
+| -FZBTkAZEXoP7CYvRV2ZwQ | William   |  126 |
+| -9da1xk7zgnnfO1uTVYGkA | Fran      |  124 |
+| -lh59ko3dxChBSZ9U7LfUw | Lissa     |  120 |
++------------------------+-----------+------+
 		
 
 Part 2: Inferences and Analysis
@@ -314,27 +314,73 @@ Part 2: Inferences and Analysis
 	
 i. Do the two groups you chose to analyze have a different distribution of hours?
 
+No, in this case I choose Las Vegas city and Category Restaurants and it have same distribution hours for business activity
 
 ii. Do the two groups you chose to analyze have a different number of reviews?
          
-         
+No, I tryed even with distinct function and in both cases they have same number of reviews
+
 iii. Are you able to infer anything from the location data provided between these two groups? Explain.
+
+No, using just the variables I choose (city, schedule, num_reviews) I cannot infer anything for example for understanding why people have differents reviews values. Maybe I have to try with other variables to do this.
 
 SQL code used for analysis:
 
+SELECT r.stars
+    ,CASE
+        WHEN r.stars > 3 THEN 'Good rate'
+        WHEN r.stars <= 3 AND r.stars > 1 THEN 'Bad rate'
+        ELSE 'Other'
+    END valuation
+    ,b.city
+    ,replace(SUBSTR(h.hours,-11),"|","")AS schedule
+    ,count(r.id) AS num_valorations
+FROM review r
+LEFT JOIN business b
+    ON b.id = r.business_id
+LEFT JOIN category c
+    ON b.id = c.business_id
+LEFT JOIN hours h
+    ON b.id = h.business_id
+WHERE h.hours is not null
+    AND b.city = 'Las Vegas'
+    AND c.category = 'Restaurants'
+GROUP BY r.stars
+ORDER BY h.hours DESC
+
+RESULT:
+
++-------+-----------+-----------+-------------+-----------------+
+| stars | valuation | city      | schedule    | num_valorations |
++-------+-----------+-----------+-------------+-----------------+
+|     4 | Good rate | Las Vegas | 10:00-23:00 |               7 |
+|     5 | Good rate | Las Vegas | 10:00-23:00 |               7 |
++-------+-----------+-----------+-------------+-----------------+
 		
 		
 2. Group business based on the ones that are open and the ones that are closed. What differences can you find between the ones that are still open and the ones that are closed? List at least two differences and the SQL code you used to arrive at your answer.
 		
 i. Difference 1:
-         
+
+As I hope, when a business is close it have less num of reviews against these business that are open, it is a significant difference from more than 230 thousand numbers of reviews
          
 ii. Difference 2:
          
-         
+Although maybe it is not too big differece, in average, when a business is open has more likely to get better rating valoration than close businesses, is nearly two points ratio difference from 3.5 for close ones to almost 3.7 for open ones
          
 SQL code used for analysis:
 
+SELECT b.is_open,sum(b.review_count) num_review_count,avg(b.stars) avg_rating
+FROM business b
+GROUP BY b.is_open
+
+RESULT: 
++---------+------------------+---------------+
+| is_open | num_review_count |    avg_rating |
++---------+------------------+---------------+
+|       0 |            35261 | 3.52039473684 |
+|       1 |           269300 | 3.67900943396 |
++---------+------------------+---------------+
 	
 	
 3. For this last part of your analysis, you are going to choose the type of analysis you want to conduct on the Yelp dataset and are going to prepare the data for analysis.
@@ -343,11 +389,68 @@ Ideas for analysis include: Parsing out keywords and business attributes for sen
 	
 i. Indicate the type of analysis you chose to do:
          
-         
+I choose a cluster and predicting analysis for undestanding the kind of business vs value rating
+
 ii. Write 1-2 brief paragraphs on the type of data you will need for your analysis and why you chose that data:
-                           
+
+For do this I will need differents valriables that give me some information to understand changes among for examples cities, historical valoration, schedule of activity and undestanding the influences of week days vs weekend days and all of these among categories, what implies if you take one specific category for anayzing these points? With all these elements I can group business with clustering analysis and even predict future valoration rating if business apply changes in schedules, days of work, or even cities to get into                         
                   
 iii. Output of your finished dataset:
-         
+
++------------------------+------------------+------------------+-----------+----------+---------+-------------+-------+--------------+--------+---------------------+
+| id                     | name             | category         | city      | day_week | weekend | schedule    | stars | review_count | stars  | date_review         |
++------------------------+------------------+------------------+-----------+----------+---------+-------------+-------+--------------+--------+---------------------+
+| -Eu04UHRqmGGyvYRDY8-tg | West Side Market | Shopping         | Cleveland | Sun      |       1 | 10:00-16:00 |   4.5 |          723 |      5 | 2017-03-10 00:00:00 |
+| -Eu04UHRqmGGyvYRDY8-tg | West Side Market | Shopping         | Cleveland | Fri      |       0 | 7:00-18:00  |   4.5 |          723 |      5 | 2017-03-10 00:00:00 |
+| -Eu04UHRqmGGyvYRDY8-tg | West Side Market | Shopping         | Cleveland | Wed      |       0 | 7:00-16:00  |   4.5 |          723 |      5 | 2017-03-10 00:00:00 |
+| -Eu04UHRqmGGyvYRDY8-tg | West Side Market | Shopping         | Cleveland | Mon      |       0 | 7:00-16:00  |   4.5 |          723 |      5 | 2017-03-10 00:00:00 |
+| -Eu04UHRqmGGyvYRDY8-tg | West Side Market | Shopping         | Cleveland | Sat      |       1 | 7:00-18:00  |   4.5 |          723 |      5 | 2017-03-10 00:00:00 |
+| -Eu04UHRqmGGyvYRDY8-tg | West Side Market | Food             | Cleveland | Sun      |       1 | 10:00-16:00 |   4.5 |          723 |      5 | 2017-03-10 00:00:00 |
+| -Eu04UHRqmGGyvYRDY8-tg | West Side Market | Food             | Cleveland | Fri      |       0 | 7:00-18:00  |   4.5 |          723 |      5 | 2017-03-10 00:00:00 |
+| -Eu04UHRqmGGyvYRDY8-tg | West Side Market | Food             | Cleveland | Wed      |       0 | 7:00-16:00  |   4.5 |          723 |      5 | 2017-03-10 00:00:00 |
+| -Eu04UHRqmGGyvYRDY8-tg | West Side Market | Food             | Cleveland | Mon      |       0 | 7:00-16:00  |   4.5 |          723 |      5 | 2017-03-10 00:00:00 |
+| -Eu04UHRqmGGyvYRDY8-tg | West Side Market | Food             | Cleveland | Sat      |       1 | 7:00-18:00  |   4.5 |          723 |      5 | 2017-03-10 00:00:00 |
+| -Eu04UHRqmGGyvYRDY8-tg | West Side Market | Seafood Markets  | Cleveland | Sun      |       1 | 10:00-16:00 |   4.5 |          723 |      5 | 2017-03-10 00:00:00 |
+| -Eu04UHRqmGGyvYRDY8-tg | West Side Market | Seafood Markets  | Cleveland | Fri      |       0 | 7:00-18:00  |   4.5 |          723 |      5 | 2017-03-10 00:00:00 |
+| -Eu04UHRqmGGyvYRDY8-tg | West Side Market | Seafood Markets  | Cleveland | Wed      |       0 | 7:00-16:00  |   4.5 |          723 |      5 | 2017-03-10 00:00:00 |
+| -Eu04UHRqmGGyvYRDY8-tg | West Side Market | Seafood Markets  | Cleveland | Mon      |       0 | 7:00-16:00  |   4.5 |          723 |      5 | 2017-03-10 00:00:00 |
+| -Eu04UHRqmGGyvYRDY8-tg | West Side Market | Seafood Markets  | Cleveland | Sat      |       1 | 7:00-18:00  |   4.5 |          723 |      5 | 2017-03-10 00:00:00 |
+| -Eu04UHRqmGGyvYRDY8-tg | West Side Market | Fruits & Veggies | Cleveland | Sun      |       1 | 10:00-16:00 |   4.5 |          723 |      5 | 2017-03-10 00:00:00 |
+| -Eu04UHRqmGGyvYRDY8-tg | West Side Market | Fruits & Veggies | Cleveland | Fri      |       0 | 7:00-18:00  |   4.5 |          723 |      5 | 2017-03-10 00:00:00 |
+| -Eu04UHRqmGGyvYRDY8-tg | West Side Market | Fruits & Veggies | Cleveland | Wed      |       0 | 7:00-16:00  |   4.5 |          723 |      5 | 2017-03-10 00:00:00 |
+| -Eu04UHRqmGGyvYRDY8-tg | West Side Market | Fruits & Veggies | Cleveland | Mon      |       0 | 7:00-16:00  |   4.5 |          723 |      5 | 2017-03-10 00:00:00 |
+| -Eu04UHRqmGGyvYRDY8-tg | West Side Market | Fruits & Veggies | Cleveland | Sat      |       1 | 7:00-18:00  |   4.5 |          723 |      5 | 2017-03-10 00:00:00 |
+| -Eu04UHRqmGGyvYRDY8-tg | West Side Market | Ethnic Food      | Cleveland | Sun      |       1 | 10:00-16:00 |   4.5 |          723 |      5 | 2017-03-10 00:00:00 |
+| -Eu04UHRqmGGyvYRDY8-tg | West Side Market | Ethnic Food      | Cleveland | Fri      |       0 | 7:00-18:00  |   4.5 |          723 |      5 | 2017-03-10 00:00:00 |
+| -Eu04UHRqmGGyvYRDY8-tg | West Side Market | Ethnic Food      | Cleveland | Wed      |       0 | 7:00-16:00  |   4.5 |          723 |      5 | 2017-03-10 00:00:00 |
+| -Eu04UHRqmGGyvYRDY8-tg | West Side Market | Ethnic Food      | Cleveland | Mon      |       0 | 7:00-16:00  |   4.5 |          723 |      5 | 2017-03-10 00:00:00 |
+| -Eu04UHRqmGGyvYRDY8-tg | West Side Market | Ethnic Food      | Cleveland | Sat      |       1 | 7:00-18:00  |   4.5 |          723 |      5 | 2017-03-10 00:00:00 |
++------------------------+------------------+------------------+-----------+----------+---------+-------------+-------+--------------+--------+---------------------+
+(Output limit exceeded, 25 of 381 total rows shown)         
          
 iv. Provide the SQL code you used to create your final dataset:
+
+SELECT b.id
+    ,b.name
+    ,c.category
+    ,b.city
+    ,SUBSTR(h.hours,1,3) AS day_week
+    ,CASE
+        WHEN SUBSTR(h.hours,1,3) IN ('Mon','Tue','Wed','Thu','Fri') THEN 0
+        WHEN SUBSTR(h.hours,1,3) IN ('Sat','Sun') THEN 1
+    END weekend
+    ,replace(SUBSTR(h.hours,-11),"|","")AS schedule
+    ,b.stars
+    ,b.review_count
+    ,r.stars
+    ,r.date as date_review
+FROM business b
+LEFT JOIN review r
+    ON b.id = r.business_id
+LEFT JOIN category c
+    ON c.business_id = b.id
+LEFT JOIN hours h
+    ON h.business_id = b.id
+WHERE c.category is not null
+    AND r.stars is not null
+    AND h.hours is not null
